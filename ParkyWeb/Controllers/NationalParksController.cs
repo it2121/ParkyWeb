@@ -20,7 +20,7 @@ namespace ParkyWeb.Controllers
             return View(new NationalPark() { });
         }
 
-        public async Task<IActionResult> GetAllNationalParks()
+        public async Task<IActionResult> GetAllNationalPark()
         {
 
 
