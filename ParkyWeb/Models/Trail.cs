@@ -13,6 +13,8 @@ namespace ParkyWeb.Models
 
         [Required]
         public string Distance { get; set; }
+             [Required]
+        public string Elevation { get; set; }
 
 
         public enum DifficultyType { Easy, Moderate, Difficult, Expert }

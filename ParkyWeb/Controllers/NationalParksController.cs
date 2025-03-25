@@ -48,7 +48,7 @@ namespace ParkyWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(NationalPark obj)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
 
 
