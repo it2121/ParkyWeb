@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ParkyWeb</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ParkyWeb.styles.css" asp-append-version="true" />
 
@@ -18,7 +18,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm bg-dark border-bottom box-shadow mb-3" data-bs-theme="dark">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">ParkyWeb</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,19 +28,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link " asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link " asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark"  asp-controller="NationalParks" asp-action="Index">National Parks</a>
+                            <a class="nav-link "  asp-controller="NationalParks" asp-action="Index">National Parks</a>
 
                         </li>  
                         
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Trails" asp-action="Index">Trails</a>
+                            <a class="nav-link " asp-controller="Trails" asp-action="Index">Trails</a>
 
                         </li>
                     </ul>
@@ -56,13 +56,9 @@
 
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - ParkyWeb - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
+     
 
-                <div class="container">
-            &copy; 2025 - ParkyWeb - <a asp-area=""asp-controller="NationalParks" asp-action="Index">aaaa</a>
-        </div>
+       
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -72,7 +68,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://kit.fontawesome.com/e19c476714.js"></script>
+    <script src="https://kit.fontawesome.com/42c6e522cd.js" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -64,7 +64,7 @@ namespace ParkyWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(TrailsVM obj)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
 
 

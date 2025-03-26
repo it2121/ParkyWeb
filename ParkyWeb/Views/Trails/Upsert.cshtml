@@ -1,4 +1,4 @@
-﻿@using ParkyWeb.Models;
+﻿
 @model ParkyWeb.Models.ViewModel.TrailsVM
 
 @{
@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-8">
                     <select asp-for="Trail.Difficulty" 
-                    asp-items="Html.GetEnumSelectList<Trail.DifficultyType>()" class="form-control"></select>
+                    asp-items="Html.GetEnumSelectList<ParkyWeb.Models.Trail.DifficultyType>()" class="form-control"></select>
                 </div>
             </div>
 
