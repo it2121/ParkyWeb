@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ParkyWeb.Models.ViewModel;
+using ParkyWeb.Repository.IRepository;
 
-namespace ParkyWeb.Pages
+namespace ParkyWeb.Pages.Shared
 {
     public class IndexModel : PageModel
     {
@@ -16,5 +18,23 @@ namespace ParkyWeb.Pages
         {
 
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
