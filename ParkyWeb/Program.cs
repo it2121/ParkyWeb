@@ -9,9 +9,19 @@ builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<INationalParkRepository, NationalParkRepository>();
 builder.Services.AddScoped<ITrailRepository, TrailRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 builder.Services.AddControllersWithViews();
+builder.Services.AddSession(o =>
+{
 
+    o.IdleTimeout = TimeSpan.FromMinutes(60);
+    o.Cookie.HttpOnly= true;
+    o.Cookie.IsEssential= true;
+
+
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,10 +37,16 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCors(x => x
+.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
 
+);
+
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapRazorPages();
 

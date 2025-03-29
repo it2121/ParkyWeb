@@ -25,7 +25,7 @@ namespace ParkyWeb.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            IEnumerable<NationalPark> noList = await _npRepo.GetAllAsync(SD.NpAPIPAth);
+            IEnumerable<NationalPark> noList = await _npRepo.GetAllAsync(SD.NpAPIPAth, HttpContext.Session.GetString("JWToken"));
             TrailsVM objVM = new TrailsVM()
             {
 
@@ -44,7 +44,7 @@ namespace ParkyWeb.Controllers
                 return View(objVM);
 
             }  
-            objVM.Trail = await _trailRepo.GetAsync(SD.TrailApiPath, id.GetValueOrDefault());
+            objVM.Trail = await _trailRepo.GetAsync(SD.TrailApiPath, id.GetValueOrDefault(), HttpContext.Session.GetString("JWToken"));
 
             if (objVM.Trail == null)
             {
@@ -71,12 +71,12 @@ namespace ParkyWeb.Controllers
 
                 if (obj.Trail.Id == 0)
                 {
-                    await _trailRepo.CreateAsync(SD.TrailApiPath, obj.Trail);
+                    await _trailRepo.CreateAsync(SD.TrailApiPath, obj.Trail, HttpContext.Session.GetString("JWToken"));
 
                 }
                 else
                 {
-                    await _trailRepo.UpdateAsync(SD.TrailApiPath + obj.Trail.Id, obj.Trail);
+                    await _trailRepo.UpdateAsync(SD.TrailApiPath + obj.Trail.Id, obj.Trail, HttpContext.Session.GetString("JWToken"));
 
 
 
@@ -87,7 +87,7 @@ namespace ParkyWeb.Controllers
 
             else
             {
-                IEnumerable<NationalPark> noList = await _npRepo.GetAllAsync(SD.NpAPIPAth);
+                IEnumerable<NationalPark> noList = await _npRepo.GetAllAsync(SD.NpAPIPAth, HttpContext.Session.GetString("JWToken"));
                 TrailsVM objVM = new TrailsVM()
                 {
 
@@ -113,14 +113,14 @@ namespace ParkyWeb.Controllers
         {
 
 
-            return Json(new { data = await _trailRepo.GetAllAsync(SD.TrailApiPath) });
+            return Json(new { data = await _trailRepo.GetAllAsync(SD.TrailApiPath, HttpContext.Session.GetString("JWToken")) });
         }
 
         [HttpDelete] 
         public async Task<IActionResult> Delete(int id)
         {
 
-            var status = await _trailRepo.DeleteAsync(SD.TrailApiPath, id);
+            var status = await _trailRepo.DeleteAsync(SD.TrailApiPath, id, HttpContext.Session.GetString("JWToken"));
 
             if (status)
             {

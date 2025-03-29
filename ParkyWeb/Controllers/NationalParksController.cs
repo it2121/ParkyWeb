@@ -28,7 +28,7 @@ namespace ParkyWeb.Controllers
                 return View(obj);
 
             }
-            obj = await _npRepo.GetAsync(SD.NpAPIPAth, id.GetValueOrDefault());
+            obj = await _npRepo.GetAsync(SD.NpAPIPAth, id.GetValueOrDefault(), HttpContext.Session.GetString("JWToken"));
 
             if (obj == null)
             {
@@ -69,19 +69,19 @@ namespace ParkyWeb.Controllers
                 }
                 else
                 {
-                    var objFromDb = await _npRepo.GetAsync(SD.NpAPIPAth, obj.Id);
+                    var objFromDb = await _npRepo.GetAsync(SD.NpAPIPAth, obj.Id, HttpContext.Session.GetString("JWToken"));
 
                     obj.Picture = objFromDb.Picture;
                 }
 
                 if (obj.Id == 0)
                 {
-                    await _npRepo.CreateAsync(SD.NpAPIPAth, obj);
+                    await _npRepo.CreateAsync(SD.NpAPIPAth, obj, HttpContext.Session.GetString("JWToken"));
 
                 }
                 else
                 {
-                    await _npRepo.UpdateAsync(SD.NpAPIPAth+obj.Id , obj);
+                    await _npRepo.UpdateAsync(SD.NpAPIPAth+obj.Id , obj, HttpContext.Session.GetString("JWToken"));
 
 
 
@@ -104,14 +104,14 @@ namespace ParkyWeb.Controllers
         {
 
 
-            return Json(new { data = await _npRepo.GetAllAsync(SD.NpAPIPAth)} );
+            return Json(new { data = await _npRepo.GetAllAsync(SD.NpAPIPAth, HttpContext.Session.GetString("JWToken")) } );
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
 
-            var status = await _npRepo.DeleteAsync(SD.NpAPIPAth, id);
+            var status = await _npRepo.DeleteAsync(SD.NpAPIPAth, id, HttpContext.Session.GetString("JWToken"));
 
             if(status)
             {

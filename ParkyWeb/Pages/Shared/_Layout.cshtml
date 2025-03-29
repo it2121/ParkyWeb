@@ -1,5 +1,6 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpAccessor
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +35,10 @@
                             <a class="nav-link " asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
 
+                        @if(httpAccessor.HttpContext.Session.GetString("JWToken")!=null &&
+                        httpAccessor.HttpContext.Session.GetString("JWToken").ToString().Length > 0)
+                        {
+                          
                         <li class="nav-item">
                             <a class="nav-link "  asp-controller="NationalParks" asp-action="Index">National Parks</a>
 
@@ -42,7 +47,30 @@
                         <li class="nav-item">
                             <a class="nav-link " asp-controller="Trails" asp-action="Index">Trails</a>
 
-                        </li>
+                        </li>  
+                         <li class="nav-item">
+                                <a class="nav-link " asp-controller="Home" asp-action="Logout">Logout</a>
+
+                            </li>
+                        }else
+                        {
+
+                            <li class="nav-item">
+                                <a class="nav-link " asp-controller="Home" asp-action="Login">Login</a>
+
+                            </li>
+                                         
+                            
+                            <li class="nav-item">
+                                <a class="nav-link " asp-controller="Home" asp-action="Register">Register</a>
+
+                            </li>
+
+
+                        }
+
+                  
+
 
 
                         <li class="nav-item">
