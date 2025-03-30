@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using ParkyWeb.Repository.IRepository;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -23,11 +24,13 @@ namespace ParkyWeb.Repository
          async Task<bool> IRepository<T>.CreateAsync(string url, T objToCreate, string token ="")
         {
             var request = new HttpRequestMessage(HttpMethod.Post, url);
+
             if(objToCreate != null)
+
             {
 
                 request.Content = new StringContent(JsonConvert.SerializeObject(objToCreate), Encoding.UTF8,"application/json");
-
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
             else { 
 
@@ -41,14 +44,14 @@ namespace ParkyWeb.Repository
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
 
-
+                    
             }
 
 
 
             HttpResponseMessage response = await client.SendAsync(request);
 
-            if(response.StatusCode == System.Net.HttpStatusCode.Created)
+            if(response.StatusCode == System.Net.HttpStatusCode.Created) 
             {
 
 
@@ -66,14 +69,13 @@ namespace ParkyWeb.Repository
         async Task<bool> IRepository<T>.DeleteAsync(string url, int Id, string token="")
         {
             var request = new HttpRequestMessage(HttpMethod.Delete, url+Id);
-
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
 
             var client = _httpClientFactory.CreateClient();
             if (token != null && token.Length != 0)
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
 
 
             }
@@ -101,11 +103,12 @@ namespace ParkyWeb.Repository
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url );
 
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
 
             var client = _httpClientFactory.CreateClient();
 
-            if (token!=null&& token.Length != 0)
+            if (token!=null && token.Length != 0)
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
@@ -136,7 +139,7 @@ namespace ParkyWeb.Repository
         async Task<T> IRepository<T>.GetAsync(string url, int Id ,string token = "")
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url+Id);
-
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
 
             var client = _httpClientFactory.CreateClient();
@@ -174,7 +177,7 @@ namespace ParkyWeb.Repository
             {
 
                 request.Content = new StringContent(JsonConvert.SerializeObject(objToUpdate), Encoding.UTF8, "application/json");
-
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
             else
             {

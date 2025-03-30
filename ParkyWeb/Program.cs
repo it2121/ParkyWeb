@@ -7,12 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddHttpClient();
+builder.Services.AddCors();
+
 builder.Services.AddScoped<INationalParkRepository, NationalParkRepository>();
 builder.Services.AddScoped<ITrailRepository, TrailRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddSession(o =>
 {
 
@@ -35,6 +38,10 @@ app.MapControllers();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}");
+
+
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCors(x => x

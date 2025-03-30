@@ -29,6 +29,7 @@ namespace ParkyWeb.Controllers
 
         public async Task<IActionResult> Index()
         {
+            string temp = HttpContext.Session.GetString("JWToken");
 
             IndexVM listOfParkAndTrails = new IndexVM()
             {
