@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using ParkyWeb.Models;
 using ParkyWeb.Models.ViewModel;
 using ParkyWeb.Repository.IRepository;
+using System.Security.Claims;
 
 namespace ParkyWeb.Controllers
 {
@@ -62,10 +65,18 @@ namespace ParkyWeb.Controllers
                 return View();
 
             }
+
+
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+            identity.AddClaim(new Claim (ClaimTypes.Name ,objUser.Username));
+            identity.AddClaim(new Claim (ClaimTypes.Role ,objUser.Role));
+
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
             HttpContext.Session.SetString("JWToken", objUser.Token);
 
 
-
+            TempData["alert"] = "Welcome " +objUser.Username;
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
@@ -88,18 +99,30 @@ namespace ParkyWeb.Controllers
 
             }
 
+            TempData["alert"] = "Registeration Sccucessful ";
 
             return RedirectToAction("Login", "Home");
            // return View("~/Views/Home/Login.cshtml");
         }
 
-        public IActionResult Logout() {
-
+        public async Task<IActionResult> Logout() {
+            await HttpContext.SignOutAsync();
             HttpContext.Session.SetString("JWToken","");
             return RedirectToAction("Index", "Home");
          //   return View("~/Pages/Index.cshtml");
         
         
         }
+
+
+
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+
+            return View();
+        }
+
     }
 }

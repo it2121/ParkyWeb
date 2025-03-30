@@ -3,9 +3,11 @@ using ParkyWeb.Models;
 using ParkyWeb.Repository.IRepository;
 using ParkyWeb;
 using ParkyWeb.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ParkyWeb.Controllers
 {
+    [Authorize]
     public class TrailsController : Controller
     {
         private readonly ITrailRepository _trailRepo;
@@ -22,7 +24,7 @@ namespace ParkyWeb.Controllers
         {
             return View(new Trail() { });
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Upsert(int? id)
         {
             IEnumerable<NationalPark> noList = await _npRepo.GetAllAsync(SD.NpAPIPAth, HttpContext.Session.GetString("JWToken"));
@@ -116,7 +118,8 @@ namespace ParkyWeb.Controllers
             return Json(new { data = await _trailRepo.GetAllAsync(SD.TrailApiPath, HttpContext.Session.GetString("JWToken")) });
         }
 
-        [HttpDelete] 
+        [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int id)
         {
 

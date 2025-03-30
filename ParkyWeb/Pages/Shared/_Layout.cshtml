@@ -34,11 +34,8 @@
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-
-                        @if(httpAccessor.HttpContext.Session.GetString("JWToken")!=null &&
-                        httpAccessor.HttpContext.Session.GetString("JWToken").ToString().Length > 0)
-                        {
-                          
+                        @if(User.IsInRole("Admin")){
+                      
                         <li class="nav-item">
                             <a class="nav-link "  asp-controller="NationalParks" asp-action="Index">National Parks</a>
 
@@ -47,8 +44,13 @@
                         <li class="nav-item">
                             <a class="nav-link " asp-controller="Trails" asp-action="Index">Trails</a>
 
-                        </li>  
-                         <li class="nav-item">
+                            </li>
+                        }
+                        @if (httpAccessor.HttpContext.Session.GetString("JWToken") != null &&
+                        httpAccessor.HttpContext.Session.GetString("JWToken").ToString().Length > 0)
+                        {
+
+                            <li class="nav-item">
                                 <a class="nav-link " asp-controller="Home" asp-action="Logout">Logout</a>
 
                             </li>
@@ -68,7 +70,7 @@
 
 
                         }
-
+                      
                   
 
 
@@ -84,6 +86,23 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+
+            @if(TempData["alert"]!= null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+
+
+                    @TempData["alert"]
+                    <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close">
+
+                        <span aria-hidden="true">&times;</span>
+
+
+                    </button>
+                </div>
+
+            }
+
             @RenderBody()
         </main>
     </div>

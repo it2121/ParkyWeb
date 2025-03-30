@@ -1,9 +1,22 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using ParkyWeb.Repository;
 using ParkyWeb.Repository.IRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>{
+
+
+    o.Cookie.HttpOnly= true;
+    o.ExpireTimeSpan= TimeSpan.FromMinutes(60);
+    o.LoginPath = "/Home/Login";
+    o.AccessDeniedPath = "/Home/AccessDenied";
+    o.SlidingExpiration = true;
+
+});
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddHttpClient();
@@ -51,9 +64,9 @@ app.UseCors(x => x
 
 app.UseSession();
 app.UseRouting();
+app.UseAuthentication();
 
 app.UseAuthorization();
-app.UseAuthentication();
 
 app.MapRazorPages();
 
